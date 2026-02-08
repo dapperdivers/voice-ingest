@@ -108,18 +108,23 @@ def send_to_openclaw(transcript: str, metadata: dict):
 
     # Build the message for Tim
     message = (
-        f"Voice note received. Process this transcript and route to the Obsidian vault.\n\n"
+        f"Voice note received from Derek. Process this and ALWAYS save something to the Obsidian vault.\n\n"
         f"**Transcript:**\n> {transcript}\n\n"
         f"**Metadata:**\n"
         f"- Audio file: {metadata.get('audio_file', 'unknown')}\n"
         f"- Recorded: {metadata.get('recorded_at', 'unknown')}\n"
         f"- Duration: {metadata.get('duration', 'unknown')}\n\n"
+        f"**CRITICAL RULE: Every voice note MUST result in a vault write.** "
+        f"Derek records voice notes because he's away from his desk. If he took the time to record it, it matters. "
+        f"Never just answer a question — always save the information to the appropriate vault note too.\n\n"
         f"**Instructions:**\n"
-        f"1. Classify the intent (new-knowledge, update-existing, action-item, person-context, random-thought, decision)\n"
-        f"2. Search the vault for related existing notes\n"
-        f"3. Route appropriately: create new notes, append to existing, extract tasks\n"
-        f"4. Save a raw transcript note to Inbox/Voice/ with proper frontmatter\n"
-        f"5. Send a brief summary to Derek via Discord (channel: 1466806583714644063)"
+        f"1. Classify the intent (new-knowledge, update-existing, action-item, person-context, question, random-thought, decision)\n"
+        f"2. Search the Obsidian vault (/home/node/obsidian-vault) for related existing notes\n"
+        f"3. ALWAYS route to vault: create new notes, append to existing, extract tasks to TASKS.md, update person notes\n"
+        f"4. Save a raw transcript note to Inbox/Voice/ with proper frontmatter (type, status, intent, topics, actions_taken)\n"
+        f"5. If it's a question, answer it AND save the answer to the relevant vault note\n"
+        f"6. If it's a reminder/task, add it to TASKS.md or the relevant project checklist\n"
+        f"7. Send a brief summary to Derek via Discord (channel: 1466806583714644063) confirming what was saved"
     )
 
     payload = {
