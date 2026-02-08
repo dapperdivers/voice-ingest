@@ -289,6 +289,11 @@ def main():
         observer = PollingObserver(timeout=POLL_INTERVAL)
         log.info("Using polling observer (interval: %ds)", POLL_INTERVAL)
 
+    # Use PollingObserver for network filesystems (CephFS/NFS)
+    # inotify doesn't work across different mount points on shared storage
+    observer = PollingObserver(timeout=POLL_INTERVAL)
+    log.info("Using polling observer (interval: %ds) — required for CephFS/NFS", POLL_INTERVAL)
+
     observer.schedule(handler, str(WATCH_DIR), recursive=False)
     observer.start()
 
@@ -305,7 +310,9 @@ def main():
     log.info("Watching for audio files... (Ctrl+C to stop)")
     try:
         while True:
-            time.sleep(1)
+            # Also poll manually in the main loop as a safety net
+            time.sleep(POLL_INTERVAL)
+            process_existing(processed)
     except KeyboardInterrupt:
         shutdown(None, None)
 
